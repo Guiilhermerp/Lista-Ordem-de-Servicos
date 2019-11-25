@@ -1,5 +1,4 @@
 <?php
-
    include './includes/dbc.php';
 
     // Preparação da consulta
