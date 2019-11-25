@@ -1,3 +1,11 @@
+/*
+Uma empreitera possuem funcionários e com estes formam equipes.
+Um funcionário pertence somente a uma equipe.
+A empreiteira precisa atentder as ordens de serviço com uma ou mais equipes.
+Essas ordens de serviço tem como atributos um bairro, um endereço e um determinado tipo.
+Devem ser realizadas em uma data, possuem um valor associado (preço). Tem duração prevista em minutos e realizada.
+*/
+
 drop database if exists osmakers;
 create database osmakers;
 use osmakers;
@@ -178,9 +186,9 @@ insert into oss (
 (5,2,480,600,35000,'2019-11-18','Rua Rio Capivari, 72'),
 (5,3,330,100,11111,'2019-11-18','Rua Expedicionario Horacio Carlos Teixeira, 33'),
 (5,4,300,110,21000,'2019-11-18','Rua Expedicionario Horacio CArlos Teixeira, 41'),
-(5,4,270,300,20500,'2019-11-18','Rua Osvaldo Gallerani, 494');
+(5,4,270,300,20500,'2019-11-18','Rua Osvaldo Gallerani, 494')
 
-insert into oss_equipes (id_equipe,id_os) values 
+insert into (id_equipe,id_os) values 
 (1,1),
 (2,1),
 (3,2),
@@ -228,3 +236,90 @@ insert into oss_equipes (id_equipe,id_os) values
 (4,38),
 (1,39),
 (2,40);
+
+/*
+Uma empreitera possuem funcionários e com estes formam equipes.
+Um funcionário pertence somente a uma equipe.
+A empreiteira precisa atentder as ordens de serviço com uma ou mais equipes.
+Essas ordens de serviço tem como atributos um bairro, um endereço e um determinado tipo.
+Devem ser realizadas em uma data, possuem um valor associado (preço). Tem duração prevista em minutos e realizada.
+*/
+
+# select * from funcionarios;
+# select id, data from oss;
+# select count(*) as quantidade from oss;
+# select * from oss where data='2019-11-18';
+
+# Quantas OSs tem para HOJE
+# select count(*) from oss where data='2019-11-18';
+
+# Quais são as OSs que tem duração prevista maior que (>) 120 e são para hoje;
+#select * from oss where duracao_prev>120 && data=date(now());
+
+#Quais são as OSs que tem no endereço a sequencia 'an'
+#select * from oss where endereco like '%an%';
+ 
+# Quantas Oss possuem 'an' no endereço, são para hoje e tem duracao pev menor que 120
+#select count(*) from oss where duracao_prev<120 and data='2019-11-18' and endereco like '%an%'
+
+# Qual a soma dos valores de todas as OSs
+#select sum(valor) from oss;
+
+# Qual a soma dos valores das OSs do bairro 1
+#select sum(valor) from oss where id_bairro=1;
+
+# Uma consulta que retorne o total dos valores das oss POR BAIRRO
+#select id_bairro, sum(valor) as total from oss group by id_bairro;
+
+# Uma consulta que retorne o nome do funcionário seguido do nome a equipe a qual ele pertence
+#select id_equipe,f.nome, e.nome from funcionarios f inner join equipes e on e.id=f.id_equipe;
+
+#Uma consulta que retorne todas as colunas de tipos de servico
+#select * from tipos_de_os;
+
+# UMA CONSULTA que retorne id da os, endereco, valor, nome do tipo da os
+/*
+select
+	o.id,
+    o.endereco,
+    o.valor,
+    t.nome,
+    o.id_bairro
+from (
+	oss o
+    inner join tipos_de_os t on o.id_tipo=t.id
+)
+where o.id_bairro=1;
+;*/
+
+# Uma consulta que resulte no total que cada equipe faturou HOJE.
+/*
+select
+	e.id,
+    e.nome,
+    sum(o.valor) as total_faturado
+from (
+	equipes e
+    inner join oss_equipes oe on e.id=oe.id_equipe
+    inner join oss o on o.id=oe.id_os
+)
+where o.data='2019-11-17'
+group by e.id, e.nome;
+*/
+# Uma consulta que resulte na media faturada por cada tipo de os faturou HOJE.
+select
+	t.id,
+    t.nome,
+    avg(o.valor)
+from (
+	oss o inner join tipos_de_os t on o.id_tipo=t.id
+)
+where o.data='2019-11-18'
+group by t.id,t.nome;
+
+
+
+
+
+
+
