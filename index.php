@@ -1,5 +1,4 @@
 <?php
-aa
    include './includes/dbc.php';
 
     // Preparação da consulta
@@ -43,7 +42,8 @@ aa
       <th scope="col">Endereço</th>
       <th scope="col">Bairro</th>
       <th scope="col">Tipo</th>
-      <th scope="col">Ação</th>
+      <th scope="col">Ação</th> 
+      <th scope="col"><a href="create-os.php" class="btn btn-secondary">Nova OS</a></th>
     </tr>
   </thead>
   <tbody>
@@ -54,6 +54,7 @@ aa
       <td><?=$os['nomeBairro']?></td>
       <td><?=$os['tipoDeOS']?></td>
       <td><a href="show-os.php?id=<?=$os['id']?>" class="btn btn-secondary">Ver</a></td>
+      <td></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
